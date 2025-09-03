@@ -1,3 +1,7 @@
+// Importar variables globales
+@use 'styles/variables' as vars;
+
+// Estilos del componente raíz de la aplicación
 app-menuh {
-  font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;
+  font-family: vars.$font-family-sans;
 }
