@@ -1,126 +1,268 @@
-// Estilos responsive para el componente menuh
-.menu-header {
-  // Breakpoints estándar para responsive design
-  
-  // Mobile first approach
-  @media (max-width: 767px) {
-    // En móviles, ajustar padding para menor espacio
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-    
-    // Ocultar elementos del menú en móviles
-    .nav-links {
-      display: none;
+// Importar variables globales con sintaxis moderna
+@use 'styles/variables' as vars;
+@use "sass:color";
+
+// Metodología BEM para el componente header
+.header {
+  // Block: header principal
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
+  border-bottom: 1px solid vars.$color-secondary;
+  padding: vars.$spacing-md vars.$spacing-4xl;
+  position: sticky;
+  top: 0;
+  background-color: vars.$color-background;
+  z-index: 40;
+
+  // Element: brand (logo + título)
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-lg;
+    color: vars.$color-primary;
+  }
+
+  &__logo {
+    width: 1rem;
+    height: 1rem;
+
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
     }
-    
-    // Mostrar menú hamburguesa solo en móviles
-    .mobile-menu-button {
-      display: flex !important;
-    }
-    
-    // Menú móvil desplegable
-    .mobile-menu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background-color: white;
-      border-bottom: 1px solid #f5f2f0;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      z-index: 50;
-      
-      &.hidden {
-        display: none;
+  }
+
+  &__title {
+    color: vars.$color-primary;
+    font-size: vars.$font-size-lg;
+    font-weight: vars.$font-weight-bold;
+    line-height: vars.$line-height-tight;
+    letter-spacing: vars.$letter-spacing-tight;
+    margin: 0;
+  }
+
+  // Element: navigation container
+  &__nav-container {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    gap: vars.$spacing-2xl;
+  }
+
+  // Element: navigation links
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-3xl;
+
+    &-link {
+      color: vars.$color-primary;
+      font-size: vars.$font-size-sm;
+      font-weight: vars.$font-weight-medium;
+      line-height: vars.$line-height-normal;
+      text-decoration: none;
+      transition: color vars.$transition-fast;
+
+      &:hover {
+        color: vars.$color-hover;
       }
-      
-      .mobile-nav-links {
-        display: flex;
-        flex-direction: column;
-        padding: 1rem;
-        gap: 1rem;
-        
-        a {
-          padding: 0.75rem 0;
-          border-bottom: 1px solid #f5f2f0;
-          
-          &:last-child {
-            border-bottom: none;
-          }
-        }
-      }
     }
   }
-  
-  // Tablet (768px - 1023px)
-  @media (min-width: 768px) and (max-width: 1023px) {
-    // Reducir gap entre elementos en tablets
-    .nav-links {
-      gap: 1.5rem !important;
-    }
-    
-    // Ocultar menú hamburguesa en tablets y desktop
-    .mobile-menu-button {
-      display: none !important;
-    }
-  }
-  
-  // Desktop (1024px+)
-  @media (min-width: 1024px) {
-    // Mantener estilos originales en desktop
-    .nav-links {
-      gap: 2.25rem !important; // 9 * 0.25rem = 2.25rem (gap-9)
-    }
-    
-    // Ocultar menú hamburguesa en desktop
-    .mobile-menu-button {
-      display: none !important;
-    }
-  }
-  
-  // Estados del menú móvil
-  .mobile-menu-button {
-    background: none;
-    border: none;
+
+  // Element: cart button
+  &__cart-btn {
+    display: flex;
+    max-width: 480px;
     cursor: pointer;
-    display: none; // Oculto por defecto, se muestra solo en móviles
-    
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: vars.$border-radius-md;
+    height: 2.5rem;
+    background-color: vars.$color-secondary;
+    color: vars.$color-primary;
+    gap: vars.$spacing-sm;
+    font-size: vars.$font-size-sm;
+    font-weight: vars.$font-weight-bold;
+    line-height: vars.$line-height-normal;
+    letter-spacing: vars.$letter-spacing-normal;
+    min-width: 0;
+    padding: 0 vars.$spacing-md;
+    border: none;
+    transition: background-color vars.$transition-fast;
+
     &:hover {
-      background-color: #f5f2f0;
-      border-radius: 0.375rem;
+      background-color: color.scale(vars.$color-secondary, $lightness: -5%);
     }
-    
+
     &:focus {
-      outline: 2px solid #181411;
+      outline: 2px solid vars.$color-primary;
       outline-offset: 2px;
     }
   }
-  
-  // Animaciones suaves para transiciones
-  .mobile-menu {
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .nav-links a {
-    transition: color 0.2s ease-in-out;
-    
-    &:hover {
-      color: #8b4513; // Color marrón para hover
+
+  &__cart-icon {
+    color: vars.$color-primary;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
     }
   }
-  
-  // Asegurar que el header sea sticky en móviles
-  position: sticky;
-  top: 0;
-  background-color: white;
-  z-index: 40;
+
+  // Element: mobile menu button
+  &__mobile-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: vars.$spacing-sm;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color vars.$transition-fast;
+
+    &:hover {
+      background-color: vars.$color-secondary;
+      border-radius: vars.$border-radius-sm;
+    }
+
+    &:focus {
+      outline: 2px solid vars.$color-primary;
+      outline-offset: 2px;
+    }
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      stroke: currentColor;
+    }
+  }
+
+  // Element: mobile menu
+  &__mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: vars.$color-background;
+    border-bottom: 1px solid vars.$color-secondary;
+    box-shadow: vars.$shadow-sm;
+    z-index: 50;
+    transition: all vars.$transition-normal;
+
+    // Modifier: hidden state
+    &--hidden {
+      display: none;
+    }
+  }
+
+  &__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: vars.$spacing-lg;
+    gap: vars.$spacing-lg;
+
+    &-link {
+      color: vars.$color-primary;
+      font-size: vars.$font-size-sm;
+      font-weight: vars.$font-weight-medium;
+      line-height: vars.$line-height-normal;
+      text-decoration: none;
+      padding: vars.$spacing-md 0;
+      border-bottom: 1px solid vars.$color-secondary;
+      transition: color vars.$transition-fast;
+
+      &:hover {
+        color: vars.$color-hover;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    &-cart-btn {
+      display: flex;
+      width: 100%;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: vars.$border-radius-md;
+      height: 2.5rem;
+      background-color: vars.$color-secondary;
+      color: vars.$color-primary;
+      gap: vars.$spacing-sm;
+      font-size: vars.$font-size-sm;
+      font-weight: vars.$font-weight-bold;
+      line-height: vars.$line-height-normal;
+      letter-spacing: vars.$letter-spacing-normal;
+      min-width: 0;
+      padding: 0 vars.$spacing-md;
+      margin-top: vars.$spacing-sm;
+      border: none;
+      transition: background-color vars.$transition-fast;
+
+      &:hover {
+        background-color: color.scale(vars.$color-secondary, $lightness: -5%);
+      }
+
+      &:focus {
+        outline: 2px solid vars.$color-primary;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  // Responsive breakpoints
+  @media (max-width: vars.$breakpoint-mobile) {
+    padding: vars.$spacing-md vars.$spacing-lg;
+
+    &__nav {
+      display: none;
+    }
+
+    &__mobile-btn {
+      display: flex;
+    }
+  }
+
+  @media (min-width: vars.$breakpoint-tablet) and (max-width: #{vars.$breakpoint-desktop - 1px}) {
+    &__nav {
+      gap: vars.$spacing-xl;
+    }
+
+    &__mobile-btn {
+      display: none;
+    }
+
+    &__mobile-menu {
+      display: none;
+    }
+  }
+
+  @media (min-width: vars.$breakpoint-desktop) {
+    &__nav {
+      gap: vars.$spacing-3xl;
+    }
+
+    &__mobile-btn {
+      display: none;
+    }
+
+    &__mobile-menu {
+      display: none;
+    }
+  }
 }
 
-// Clase utilitaria para mostrar/ocultar menú móvil
-.mobile-menu-open {
-  display: block !important;
-}
-
-// Estilos adicionales para mejorar la accesibilidad
+// Utility class: Screen reader only
 .sr-only {
   position: absolute;
   width: 1px;
