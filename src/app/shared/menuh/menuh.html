@@ -49,6 +49,12 @@
     </svg>
   </button>
 
+  <!-- Mobile overlay para bloquear scroll y oscurecer fondo -->
+  <div class="header__mobile-overlay" 
+       [class.header__mobile-overlay--hidden]="!isMobileMenuOpen" 
+       (click)="closeMobileMenu()">
+  </div>
+
   <!-- Mobile dropdown menu -->
   <div class="header__mobile-menu" [class.header__mobile-menu--hidden]="!isMobileMenuOpen">
     <nav class="header__mobile-nav">

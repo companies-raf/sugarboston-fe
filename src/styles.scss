@@ -17,6 +17,27 @@ body {
   line-height: vars.$line-height-normal;
 }
 
+// Clase para bloquear scroll cuando el menú móvil está abierto
+app-root.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+  
+  // Aplicar también al body para mayor compatibilidad
+  body {
+    overflow: hidden;
+  }
+}
+
+// Estilos para el contenido principal cuando el menú móvil está abierto
+.content-overlay {
+  // Clase utilizada para aplicar efectos visuales cuando el menú móvil está abierto
+  position: relative;
+  
+  // Opcional: descomenta para agregar efectos visuales al contenido
+  // filter: blur(1px) brightness(0.7);
+  // transition: filter vars.$transition-normal;
+}
+
 // Estilos para formularios
 .form-input {
   display: flex;

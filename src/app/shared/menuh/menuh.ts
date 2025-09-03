@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, HostBinding, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,7 +8,16 @@ import { CommonModule } from '@angular/common';
   styleUrl: './menuh.scss'
 })
 export class MenuhComponent implements OnInit, OnDestroy {
-  isMobileMenuOpen = false;
+  public isMobileMenuOpen = false;
+
+  // Output para comunicar cambios de estado al componente padre
+  @Output() menuStateChange = new EventEmitter<boolean>();
+
+  // HostBinding para aplicar clase CSS al elemento host
+  @HostBinding('class.menu-open') 
+  get isMenuOpen() { 
+    return this.isMobileMenuOpen; 
+  }
 
   ngOnInit(): void {
     // Cerrar el menú móvil si se carga en una pantalla grande
@@ -16,7 +25,7 @@ export class MenuhComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Limpiar cualquier listener si es necesario
+    // El HostBinding se encarga automáticamente de limpiar las clases
   }
 
   /**
@@ -24,6 +33,7 @@ export class MenuhComponent implements OnInit, OnDestroy {
    */
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    this.menuStateChange.emit(this.isMobileMenuOpen);
   }
 
   /**
@@ -31,6 +41,7 @@ export class MenuhComponent implements OnInit, OnDestroy {
    */
   closeMobileMenu(): void {
     this.isMobileMenuOpen = false;
+    this.menuStateChange.emit(this.isMobileMenuOpen);
   }
 
   /**

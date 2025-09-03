@@ -144,6 +144,24 @@
     }
   }
 
+  // Element: mobile overlay para bloquear scroll y oscurecer fondo
+  &__mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 45;
+    transition: opacity vars.$transition-normal;
+    display: none; // Oculto por defecto, solo visible en móviles
+    
+    // Modifier: hidden state
+    &--hidden {
+      display: none !important;
+    }
+  }
+
   // Element: mobile menu
   &__mobile-menu {
     position: absolute;
@@ -152,10 +170,13 @@
     right: 0;
     background-color: vars.$color-background;
     border-bottom: 1px solid vars.$color-secondary;
-    box-shadow: vars.$shadow-sm;
     z-index: 50;
     transition: all vars.$transition-normal;
-
+    
+    // Sombra oscura más pronunciada para diferenciarlo cuando está abierto
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 
+                0 4px 16px rgba(0, 0, 0, 0.2);
+    
     // Modifier: hidden state
     &--hidden {
       display: none;
@@ -231,6 +252,11 @@
     &__mobile-btn {
       display: flex;
     }
+
+    // Mostrar overlay solo en móviles
+    &__mobile-overlay {
+      display: block;
+    }
   }
 
   @media (min-width: vars.$breakpoint-tablet) and (max-width: #{vars.$breakpoint-desktop - 1px}) {
@@ -240,6 +266,10 @@
 
     &__mobile-btn {
       display: none;
+    }
+
+    &__mobile-overlay {
+      display: none !important;
     }
 
     &__mobile-menu {
@@ -254,6 +284,10 @@
 
     &__mobile-btn {
       display: none;
+    }
+
+    &__mobile-overlay {
+      display: none !important;
     }
 
     &__mobile-menu {
