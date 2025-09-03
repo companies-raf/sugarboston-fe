@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MenuhComponent } from './shared/menuh/menuh';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MenuhComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
