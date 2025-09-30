@@ -1,0 +1,1 @@
+import{Ja as o,Ka as i,Pa as m,ta as t}from"./chunk-BELQ4HEG.js";var a=class n{static \u0275fac=function(e){return new(e||n)};static \u0275cmp=t({type:n,selectors:[["app-admin"]],decls:2,vars:0,template:function(e,s){e&1&&(o(0,"p"),m(1,"admin works!"),i())},encapsulation:2})};export{a as AdminComponent};

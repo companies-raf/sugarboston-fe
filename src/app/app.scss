@@ -1,7 +1,0 @@
-// Importar variables globales
-@use 'styles/variables' as vars;
-
-// Estilos del componente raíz de la aplicación
-app-menuh {
-  font-family: vars.$font-family-sans;
-}
