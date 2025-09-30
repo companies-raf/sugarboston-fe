@@ -1,1 +1,42 @@
-<p>login works!</p>
+<div class="login">
+  <div class="login__container">
+    <app-title title="Iniciar sesión"></app-title>
+    
+    <!-- Campo de correo electrónico -->
+    <div class="login__form-group">
+      <label class="login__field">
+        <p class="login__label">Correo electrónico</p>
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          class="login__input"
+          value=""
+        />
+      </label>
+    </div>
+    
+    <!-- Campo de contraseña -->
+    <div class="login__form-group">
+      <label class="login__field">
+        <p class="login__label">Contraseña</p>
+        <input
+          type="password"
+          placeholder="Contraseña"
+          class="login__input"
+          value=""
+        />
+      </label>
+    </div>
+    
+    <!-- Botón de inicio de sesión -->
+    <div class="login__button-container">
+      <button class="login__submit-btn">
+        <span>Iniciar Sesión</span>
+      </button>
+    </div>
+    
+    <!-- Enlaces adicionales -->
+    <p class="login__link">¿Olvidaste tu contraseña?</p>
+    <p class="login__link">Crear una cuenta</p>
+  </div>
+</div>
