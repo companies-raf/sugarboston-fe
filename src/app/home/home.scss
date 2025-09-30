@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Variables de colores
 $color-nubes: #edcfa0;
 $color-edificio: #c46c4c;
@@ -9,26 +11,7 @@ $color-gris-claro: #f8f9fa;
 $color-sombra: rgba(0, 0, 0, 0.1);
 $color-sombra-intensa: rgba(0, 0, 0, 0.2);
 
-// Mixins
-@mixin card-shadow {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-}
-
-@mixin card-shadow-hover {
-  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.18);
-}
-
-@mixin transition-smooth {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@mixin glass-effect {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
+// Mixins simplificados
 @mixin parallax-element {
   transform-style: preserve-3d;
   will-change: transform;
@@ -40,7 +23,8 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
   position: relative;
   overflow-x: hidden;
   font-family: 'Arial', sans-serif;
-  
+  padding: 4rem 1rem 2rem 1rem;
+
   // Imagen de fondo de galletas con parallax
   &__background-image {
     position: fixed;
@@ -95,8 +79,6 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
     animation: floatingParticles 15s linear infinite;
   }
 
-  padding: 4rem 1rem 2rem 1rem;
-
   &__container {
     max-width: 1200px;
     margin: 0 auto;
@@ -150,13 +132,10 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
     box-shadow: 
       0 8px 32px rgba(0, 0, 0, 0.08),
       0 2px 6px rgba(0, 0, 0, 0.04);
-    @include parallax-element;
     max-width: 900px;
     width: 100%;
     position: relative;
     overflow: hidden;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    transform-style: preserve-3d;
     
     // Máscara para crear el efecto de desvanecimiento
     mask: radial-gradient(ellipse at center, black 0%, black 60%, transparent 100%);
@@ -187,27 +166,6 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
       -webkit-mask: radial-gradient(ellipse at center, black 0%, black 50%, transparent 90%);
     }
 
-    // Efecto de brillo interno
-    &::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(
-        from 0deg at 50% 50%,
-        transparent 0deg,
-        rgba(255, 255, 255, 0.1) 60deg,
-        rgba(237, 207, 160, 0.15) 120deg,
-        transparent 180deg,
-        rgba(213, 154, 87, 0.1) 240deg,
-        transparent 360deg
-      );
-      animation: rotateGlow 8s linear infinite;
-      opacity: 0.6;
-      z-index: -1;
-    }
 
 
     @media (max-width: 768px) {
@@ -227,7 +185,7 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
     z-index: 2;
 
     &-title {
-      background: linear-gradient(135deg, $color-texto-boston 0%, darken($color-texto-boston, 10%) 100%);
+      background: linear-gradient(135deg, $color-texto-boston 0%, color.scale($color-texto-boston, $lightness: -10%) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -237,7 +195,6 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
       letter-spacing: -0.02em;
       line-height: 1.2;
       position: relative;
-      animation: titlePulse 3s ease-in-out infinite;
 
       &::after {
         content: '';
@@ -309,7 +266,7 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
     }
 
     &-text {
-      background: linear-gradient(135deg, $color-edificio 0%, darken($color-edificio, 15%) 100%);
+      background: linear-gradient(135deg, $color-edificio 0%, color.scale($color-edificio, $lightness: -15%) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -368,10 +325,6 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
       align-items: center;
       gap: 2rem;
       flex-wrap: wrap;
-
-      @media (max-width: 768px) {
-        gap: 1.5rem;
-      }
     }
 
     &-link {
@@ -384,43 +337,18 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
       text-decoration: none;
       border-radius: 12px;
       transition: all 0.3s ease;
-      position: relative;
 
-      &:hover {
-        transform: translateY(-2px);
-      }
-
-      &:nth-child(1):hover {
-        color: #E4405F;
-      }
-
-      &:nth-child(2):hover {
-        color: #000000;
-      }
-
-      &:nth-child(3):hover {
-        color: #0077B5;
-      }
-
-      &:nth-child(4):hover {
-        color: #c46c4c;
-      }
-
-      @media (max-width: 768px) {
-        width: 44px;
-        height: 44px;
-      }
+      &:hover { transform: translateY(-2px); }
+      &:nth-child(1):hover { color: #E4405F; }
+      &:nth-child(2):hover { color: #000000; }
+      &:nth-child(3):hover { color: #0077B5; }
+      &:nth-child(4):hover { color: #c46c4c; }
     }
 
     &-icon {
       width: 28px;
       height: 28px;
       transition: all 0.3s ease;
-
-      @media (max-width: 768px) {
-        width: 24px;
-        height: 24px;
-      }
     }
 
     &-link:hover &-icon {
@@ -504,118 +432,8 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
   }
 }
 
-@keyframes titleFloat {
-  0%, 100% {
-    transform: translateY(0) rotateX(0);
-  }
-  50% {
-    transform: translateY(-10px) rotateX(5deg);
-  }
-}
 
-@keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-@keyframes shine {
-  0% {
-    transform: translateX(-100%) translateY(-100%) rotate(45deg);
-  }
-  100% {
-    transform: translateX(100%) translateY(100%) rotate(45deg);
-  }
-}
-
-@keyframes slideShine {
-  0% {
-    left: -100%;
-  }
-  50% {
-    left: 100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-@keyframes rotate3d {
-  0% {
-    transform: rotateY(0deg) rotateX(0deg);
-  }
-  25% {
-    transform: rotateY(90deg) rotateX(5deg);
-  }
-  50% {
-    transform: rotateY(180deg) rotateX(0deg);
-  }
-  75% {
-    transform: rotateY(270deg) rotateX(-5deg);
-  }
-  100% {
-    transform: rotateY(360deg) rotateX(0deg);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-  }
-}
-
-// Nuevas animaciones modernas
-@keyframes borderGlow {
-  0%, 100% {
-    opacity: 0.3;
-    transform: rotate(0deg);
-  }
-  50% {
-    opacity: 0.8;
-    transform: rotate(180deg);
-  }
-}
-
-@keyframes rotateGlow {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes titlePulse {
-  0%, 100% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-  50% {
-    transform: scale(1.02);
-    filter: brightness(1.1);
-  }
-}
-
+// Animaciones esenciales
 @keyframes underlineGlow {
   0%, 100% {
     width: 60px;
@@ -627,100 +445,17 @@ $color-sombra-intensa: rgba(0, 0, 0, 0.2);
   }
 }
 
-@keyframes constructionFloat {
+@keyframes borderGlow {
   0%, 100% {
-    transform: translateY(0) rotateZ(0deg);
-  }
-  25% {
-    transform: translateY(-8px) rotateZ(2deg);
-  }
-  50% {
-    transform: translateY(-4px) rotateZ(0deg);
-  }
-  75% {
-    transform: translateY(-12px) rotateZ(-2deg);
-  }
-}
-
-@keyframes constructionRotate {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(360deg);
-  }
-}
-
-@keyframes iconGlow {
-  0% {
     opacity: 0.3;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0.6;
-    transform: scale(1.1);
-  }
-}
-
-@keyframes sparkle {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scale(0.8);
+    transform: rotate(0deg);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.2);
+    opacity: 0.8;
+    transform: rotate(180deg);
   }
 }
 
-@keyframes socialWaves {
-  0%, 100% {
-    transform: rotate(0deg) scale(1);
-    opacity: 0.3;
-  }
-  50% {
-    transform: rotate(180deg) scale(1.1);
-    opacity: 0.6;
-  }
-}
-
-@keyframes socialParticles {
-  0% {
-    transform: translateX(0) translateY(0);
-  }
-  100% {
-    transform: translateX(-60px) translateY(-40px);
-  }
-}
-
-@keyframes socialTitleFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes starTwinkle {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(0.8) rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2) rotate(180deg);
-  }
-}
-
-@keyframes iconBounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
-}
 
 // Responsive adicional
 @media (max-width: 480px) {
