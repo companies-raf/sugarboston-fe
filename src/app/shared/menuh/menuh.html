@@ -1,0 +1,72 @@
+<header class="header">
+  <!-- Brand section: logo + title -->
+  <div class="header__brand">
+    <div class="header__logo">
+      <img src="logo_menu.png" alt="Sugar Boston" class="header__logo-image">
+    </div>
+    <h2 class="header__title">Sugar Boston</h2>
+  </div>
+  
+  <!-- Desktop/tablet navigation -->
+  <div class="header__nav-container">
+    <nav class="header__nav">
+      <a class="header__nav-link" href="#">Inicio</a>
+      <!-- <a class="header__nav-link" href="#">Menú</a> -->
+      <!-- <a class="header__nav-link" href="#">Acerca de</a> -->
+    </nav>
+    
+    <button class="header__cart-btn">
+      <div class="header__cart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+          <path
+            d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z"
+          ></path>
+        </svg>
+      </div>
+    </button>
+  </div>
+
+  <!-- Mobile menu button -->
+  <button 
+    class="header__mobile-btn"
+    (click)="toggleMobileMenu()"
+    [attr.aria-expanded]="isMobileMenuOpen"
+    aria-label="Abrir menú de navegación"
+  >
+    <span class="sr-only">Abrir menú</span>
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        stroke-width="2" 
+        [attr.d]="isMobileMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'"
+      ></path>
+    </svg>
+  </button>
+
+  <!-- Mobile overlay para bloquear scroll y oscurecer fondo -->
+  <div class="header__mobile-overlay" 
+       [class.header__mobile-overlay--hidden]="!isMobileMenuOpen" 
+       (click)="closeMobileMenu()">
+  </div>
+
+  <!-- Mobile dropdown menu -->
+  <div class="header__mobile-menu" [class.header__mobile-menu--hidden]="!isMobileMenuOpen">
+    <nav class="header__mobile-nav">
+      <a class="header__mobile-nav-link" href="#" (click)="closeMobileMenu()">Inicio</a>
+      <!-- <a class="header__mobile-nav-link" href="#" (click)="closeMobileMenu()">Menú</a>
+      <a class="header__mobile-nav-link" href="#" (click)="closeMobileMenu()">Acerca de</a>
+      
+      <button class="header__mobile-nav-cart-btn" (click)="closeMobileMenu()">
+        <div class="header__cart-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+            <path
+              d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z"
+            ></path>
+          </svg>
+        </div>
+        <span>Carrito</span>
+      </button> -->
+    </nav>
+  </div>
+</header>

@@ -32,6 +32,12 @@ To build the project run:
 
 ```bash
 ng build
+
+# Build de producción (recomendado)
+ng build --configuration production
+
+# Build de desarrollo
+ng build --configuration development
 ```
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.

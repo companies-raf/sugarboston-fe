@@ -1,0 +1,14 @@
+// Importar variables globales con sintaxis moderna
+@use 'styles/variables' as vars;
+
+// Componente BEM para títulos
+.title {
+  color: vars.$color-primary;
+  letter-spacing: vars.$letter-spacing-tight;
+  font-size: vars.$font-size-3xl;
+  font-weight: vars.$font-weight-bold;
+  line-height: vars.$line-height-tight;
+  padding: vars.$spacing-xl vars.$spacing-lg vars.$spacing-md vars.$spacing-lg;
+  text-align: center;
+  margin: 0;
+}
