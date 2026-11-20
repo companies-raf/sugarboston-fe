@@ -1,27 +1,62 @@
-// TODO canMatch: bloquea la coincidencia de la ruta (ideal para lazy-load; evita cargar el bundle).
-// canActivate: permite o bloquea la navegación (la ruta ya coincidió).
-// canActivateChild: como arriba, pero para rutas hijas.
-// canDeactivate: previene salir de una página (p. ej., hay cambios sin guardar).
-
 import { inject } from '@angular/core';
 import { CanMatchFn, Router } from '@angular/router';
 
 type User = { roles: string[] } | null;
 
-const hasAnyRole = (user: User, required: string[] = []) =>
-  required.length === 0 || !!user?.roles?.some(r => required.includes(r));
+const isStringArray = (value: unknown): value is string[] =>
+  Array.isArray(value) && value.every((item: unknown) => typeof item === 'string');
+
+const readUser = (): User => {
+  const storedUser = localStorage.getItem('user');
+  if (storedUser === null) return null;
+
+  let parsedUser: unknown;
+  try {
+    parsedUser = JSON.parse(storedUser);
+  } catch (error) {
+    if (error instanceof SyntaxError) return null;
+    throw error;
+  }
+
+  if (
+    typeof parsedUser !== 'object' ||
+    parsedUser === null ||
+    !('roles' in parsedUser) ||
+    !isStringArray(parsedUser.roles)
+  ) {
+    return null;
+  }
+
+  return { roles: parsedUser.roles };
+};
+
+const hasAnyRole = (user: User, requiredRoles: string[]) =>
+  requiredRoles.length === 0 || !!user?.roles.some(role => requiredRoles.includes(role));
 
 export const authGuard: CanMatchFn = (route, segments) => {
   const router = inject(Router);
-  // Tu servicio real:
-  const isLoggedIn = !!localStorage.getItem('token'); // token - "1234567890"
-  const user: User = JSON.parse(localStorage.getItem('user') || 'null'); // user - {"roles": ["admin","seller"]}
-  const requiredRoles = (route.data?.['roles'] as string[]) ?? [];
+  const token = localStorage.getItem('token')?.trim();
+  const configuredRoles = route.data?.['roles'];
+  const requiredRoles =
+    configuredRoles === undefined
+      ? []
+      : isStringArray(configuredRoles)
+        ? configuredRoles
+        : null;
 
-  if (isLoggedIn && hasAnyRole(user, requiredRoles)) return true; 
+  const redirectToLogin = () =>
+    router.createUrlTree(['/login'], {
+      queryParams: { returnUrl: `/${segments.map(segment => segment.path).join('/')}` },
+    });
 
-  // redirige a login con returnUrl
-  return router.createUrlTree(['/login'], {
-    queryParams: { returnUrl: '/' + segments.map(s => s.path).join('/') }
-  });
+  if (requiredRoles === null) {
+    console.error('Invalid roles configuration for guarded route:', route.path);
+    return redirectToLogin();
+  }
+
+  if (token && hasAnyRole(requiredRoles.length === 0 ? null : readUser(), requiredRoles)) {
+    return true;
+  }
+
+  return redirectToLogin();
 };
